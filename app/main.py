@@ -36,7 +36,7 @@ def fetch_and_resize_image(animal_type, size=(200, 200)):
     if animal_type == "duck":
         url = ANIMAL_URLS[animal_type]
     else:
-        # Generate random dimensions between 200 and 600
+        # Generate random dimensions between 300 and 700
         width = random.randint(300, 700)
         height = random.randint(300, 700)
         url = f"{ANIMAL_URLS[animal_type]}/{width}/{height}"
