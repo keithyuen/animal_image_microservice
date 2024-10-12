@@ -18,7 +18,7 @@ cd animal_image_microservice
 ```
 
 ### 2. Build and Run the Docker
-To simplify the setup, this project uses Docker to handle all dependencies and to run the application. The following command will build the Docker image and start the container.
+To simplify the setup, this project uses Docker to handle all dependencies and to run the application. The following commands will build the Docker image and start the container.
 
 #### 2.1 Build the Docker Image
 Run the following command to build the Docker image:
