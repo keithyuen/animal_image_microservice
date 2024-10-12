@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animal Image Microservice</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Animal Image Microservice</h1>
+    
+    <!-- Form to choose animal type and number of images to fetch -->
+    <form id="fetchForm">
+        <label for="animalType">Choose Animal:</label>
+        <select id="animalType" name="animalType">
+            <option value="duck">Duck</option>
+            <option value="dog">Dog</option>
+            <option value="bear">Bear</option>
+        </select>
+        <label for="count">Number of Images:</label>
+        <input type="number" id="count" name="count" min="1" value="1">
+        <button type="submit">Fetch and Save Images</button>
+    </form>
+
+    <!-- Buttons to show the last image or all images -->
+    <h2>Display Saved Images</h2>
+    <button onclick="fetchLastImage()">Show Last Image</button>
+    <button onclick="fetchAllImages()">Show All Images</button>
+
+    <!-- Loading overlay with message and animation -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <div id="loadingMessage">Loading images...</div>
+    </div>
+
+    <!-- Completion icon -->
+    <div id="completionIcon" style="display: none;">✅ Images saved successfully!</div>
+
+    <!-- Container for displaying images -->
+    <div id="imageContainer"></div>
+
+    <script>
+        // Function to show the loading overlay
+        function showLoadingAnimation() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            document.getElementById("completionIcon").style.display = "none";
+        }
+
+        // Function to show the completion icon
+        function showCompletionIcon() {
+            document.getElementById("loadingOverlay").style.display = "none";
+            document.getElementById("completionIcon").style.display = "block";
+        }
+
+        // Fetch and save images with a loading animation and completion icon
+        document.getElementById("fetchForm").onsubmit = async (e) => {
+            e.preventDefault();
+            const animalType = document.getElementById("animalType").value;
+            const count = document.getElementById("count").value;
+            
+            showLoadingAnimation();
+            await fetch(`/save/${animalType}/${count}`, { method: "POST" });
+            showCompletionIcon();
+        };
+
+        // Function to show and hide loading for the last image
+        function showLoadingMessage() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            document.getElementById("completionIcon").style.display = "none";
+        }
+
+        function hideLoadingMessage() {
+            document.getElementById("loadingOverlay").style.display = "none";
+        }
+
+        // Fetch and display the last saved image
+        async function fetchLastImage() {
+            showLoadingMessage();
+            const animalType = document.getElementById("animalType").value;
+            const response = await fetch(`/last/${animalType}`);
+            const data = await response.json();
+            const imageContainer = document.getElementById("imageContainer");
+            imageContainer.innerHTML = `<img class="single-image" src="data:image/jpeg;base64,${data.image_url}" alt="${data.animal_type}">`;
+            hideLoadingMessage();
+        }
+
+        // Fetch and display all images of all animal types
+        async function fetchAllImages() {
+            showLoadingMessage();
+            const response = await fetch(`/all`);
+            const data = await response.json();
+            const imageContainer = document.getElementById("imageContainer");
+            imageContainer.innerHTML = data.images.map(image => 
+                `<div>
+                    <h4>${image.animal_type.charAt(0).toUpperCase() + image.animal_type.slice(1)}</h4>
+                    <img src="data:image/jpeg;base64,${image.image_url}" alt="${image.animal_type}">
+                </div>`
+            ).join('');
+            hideLoadingMessage();
+        }
+    </script>
+</body>
+</html>
