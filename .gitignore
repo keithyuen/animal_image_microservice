@@ -1787,3 +1787,7 @@
 .venv/lib/python3.9/site-packages/uvicorn-0.31.1.dist-info/REQUESTED
 .venv/lib/python3.9/site-packages/uvicorn-0.31.1.dist-info/WHEEL
 .venv/lib/python3.9/site-packages/uvicorn-0.31.1.dist-info/licenses/LICENSE.md
+.vscode/launch.json
+tests/last_dog_image.jpg
+animal_images.db
+tests/curl-test.sh

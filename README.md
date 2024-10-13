@@ -1,6 +1,6 @@
 # Animal Image Microservice
 
-This microservice fetches and stores random images of animals (duck, dog, bear) and provides REST APIs to extract them and a simple UI to view them. It is built with FastAPI, uses SQLAlchemy for database interactions, and includes automated tests using Pytest.
+This microservice fetches and stores random images of animals (duck, dog, bear) and provides REST APIs to extract them and a simple UI to view them. It is built with FastAPI, uses SQLAlchemy and SQLite for database, and includes automated tests using Pytest.
 
 ## Prerequisites
 
